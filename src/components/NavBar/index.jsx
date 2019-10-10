@@ -15,8 +15,8 @@ export default function NavBar() {
           social_feed
         </Link>
         <div className="navbar-nav">
-          <Link className="nav-item nav-link active" to="Blank">
-            Blank
+          <Link className="nav-item nav-link active" to="CreatePost">
+            Create Post
           </Link>
         </div>
       </nav>

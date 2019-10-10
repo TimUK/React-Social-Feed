@@ -20,7 +20,7 @@ const useStyles = makeStyles(theme => ({
 	}
   }));
 
-export default function Blank() {
+export default function Home() {
 	var posts = [
 		{title:"hello",author:"Tim",body:"this is my first post"},
 		{title:"Disney Frozen",author:"Anna",body:"Do you wanna build a snowman?"},
