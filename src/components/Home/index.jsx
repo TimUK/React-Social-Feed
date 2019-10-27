@@ -1,11 +1,11 @@
-﻿import React from "react";
+﻿import React, { Component } from "react";
 import Paper from "@material-ui/core/Paper";
-import { makeStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/styles';
 
-const useStyles = makeStyles(theme => ({
+const styles = theme => ({
 	paper: {
 		marginTop:"3vh",
-	  padding: theme.spacing(3, 2),
+	  padding: "5px",
 	  width:"50vw",
 	  borderColor:"#212529",
 	  //color:"#fff",
@@ -18,26 +18,40 @@ const useStyles = makeStyles(theme => ({
 		maxHeight:"71vh",
 		overflowY:"scroll"
 	}
-  }));
+  });
 
-export default function Home() {
-	var posts = [
-		{title:"hello",author:"Tim",body:"this is my first post"},
-		{title:"Disney Frozen",author:"Anna",body:"Do you wanna build a snowman?"},
-		{title:"More post?",author:"Postman Pat",body:"I can't deliver all these posts!"},
-		{title:"Are you one of the Winkelvoss twins??",author:"Mark Zuckerberg",body:"You have stolen Facebook! You didn't create Facebook!"}
-	];
-	const classes = useStyles();
-  return (
-  	<div id="mainContent" className={classes.root}>
-		{posts.map(post=>
-			<Paper className={classes.paper}>
-				<h1>{post.title}</h1>
-				{post.body}<br/>
-				<sub>- {post.author}</sub>
-			</Paper>
-		)}  
-		  
-	</div>
-  );
+class Home extends Component {
+	constructor(props){
+		super(props);
+		this.posts = [];
+		this.getPosts();
+	}
+	state={
+		posts:[]
+	}
+
+	getPosts = async ()=>{
+		var newposts = await fetch("/api/GetPosts");
+		var newpostsjson = await(newposts.json());
+		console.log(newpostsjson);
+		this.setState({posts:newpostsjson});
+	}
+
+	render = ()=>{
+		const { classes } = this.props;
+		
+		return (
+			<div id="mainContent" className={classes.root}>
+				{this.state.posts.map((post,index)=>
+					<Paper key={index} className={classes.paper}>
+						<h1>{post.title}</h1>
+						{post.body}<br/>
+						<sub>- {post.author}</sub>
+					</Paper>
+				)}  
+				
+			</div>
+		);
+	}
 }
+export default withStyles(styles)(Home);
