@@ -37,6 +37,10 @@ class Home extends Component {
 		this.setState({posts:newpostsjson});
 	}
 
+	componentDidMount(){
+		console.log(this.state.post);
+	}
+
 	render = ()=>{
 		const { classes } = this.props;
 		
